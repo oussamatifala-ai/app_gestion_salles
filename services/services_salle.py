@@ -6,7 +6,7 @@ class ServiceSalle:
         self.dao = DataSalle()
 
     def ajouter_salle(self, salle):
-        if salle.code == "" or salle.libelle == "" or salle.type == "":
+        if not salle.code or not salle.libelle or not salle.type:
             print("Erreur: champs vides")
             return
 
@@ -23,7 +23,7 @@ class ServiceSalle:
         print("Salle ajoutée avec succès")
 
     def modifier_salle(self, salle):
-        if salle.code == "" or salle.libelle == "" or salle.type == "":
+        if not salle.code or not salle.libelle or not salle.type:
             print("Erreur: champs vides")
             return
 
@@ -40,7 +40,7 @@ class ServiceSalle:
         print("Salle modifiée avec succès")
 
     def supprimer_salle(self, code):
-        if code == "":
+        if not code:
             print("Erreur: code vide")
             return
 
@@ -53,7 +53,7 @@ class ServiceSalle:
         print("Salle supprimée avec succès")
 
     def rechercher_salle(self, code):
-        if code == "":
+        if not code:
             print("Erreur: code vide")
             return None
 
