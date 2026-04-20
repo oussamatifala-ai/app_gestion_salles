@@ -1,4 +1,5 @@
 import customtkinter as ctk
+from tkinter import ttk
 from services.services_salle import ServiceSalle
 from models.salle import Salle
 
@@ -9,38 +10,74 @@ class ViewSalle(ctk.CTk):
         super().__init__()
 
         self.title("Gestion des salles")
-        self.geometry("400x500")
+        self.geometry("700x500")
 
         self.service = ServiceSalle()
 
-        # Inputs
-        self.entry_code = ctk.CTkEntry(self, placeholder_text="Code")
-        self.entry_code.pack(pady=5)
+        # Cadre informations
+        self.cadre_info = ctk.CTkFrame(self)
+        self.cadre_info.pack(pady=10, padx=10)
 
-        self.entry_libelle = ctk.CTkEntry(self, placeholder_text="Libellé")
-        self.entry_libelle.pack(pady=5)
+        self.entry_code = ctk.CTkEntry(self.cadre_info, placeholder_text="Code", width=200)
+        self.entry_code.grid(row=0, column=0, padx=10, pady=5)
 
-        self.entry_type = ctk.CTkEntry(self, placeholder_text="Type")
-        self.entry_type.pack(pady=5)
+        self.entry_libelle = ctk.CTkEntry(self.cadre_info, placeholder_text="Libellé", width=200)
+        self.entry_libelle.grid(row=1, column=0, padx=10, pady=5)
 
-        self.entry_capacite = ctk.CTkEntry(self, placeholder_text="Capacité")
-        self.entry_capacite.pack(pady=5)
+        self.entry_type = ctk.CTkEntry(self.cadre_info, placeholder_text="Type", width=200)
+        self.entry_type.grid(row=2, column=0, padx=10, pady=5)
 
-        # Buttons
-        btn_add = ctk.CTkButton(self, text="Ajouter", command=self.ajouter_salle)
-        btn_add.pack(pady=5)
+        self.entry_capacite = ctk.CTkEntry(self.cadre_info, placeholder_text="Capacité", width=200)
+        self.entry_capacite.grid(row=3, column=0, padx=10, pady=5)
 
-        btn_show = ctk.CTkButton(self, text="Afficher", command=self.afficher_salles)
-        btn_show.pack(pady=5)
+        # Cadre boutons
+        self.cadre_btn = ctk.CTkFrame(self)
+        self.cadre_btn.pack(pady=10, padx=10)
 
-        btn_update = ctk.CTkButton(self, text="Modifier", command=self.modifier_salle)
-        btn_update.pack(pady=5)
+        btn_add = ctk.CTkButton(self.cadre_btn, text="Ajouter", command=self.ajouter_salle)
+        btn_add.grid(row=0, column=0, padx=5, pady=5)
 
-        btn_delete = ctk.CTkButton(self, text="Supprimer", command=self.supprimer_salle)
-        btn_delete.pack(pady=5)
+        btn_update = ctk.CTkButton(self.cadre_btn, text="Modifier", command=self.modifier_salle)
+        btn_update.grid(row=0, column=1, padx=5, pady=5)
 
-        btn_search = ctk.CTkButton(self, text="Rechercher", command=self.rechercher_salle)
-        btn_search.pack(pady=5)
+        btn_delete = ctk.CTkButton(self.cadre_btn, text="Supprimer", command=self.supprimer_salle)
+        btn_delete.grid(row=0, column=2, padx=5, pady=5)
+
+        btn_search = ctk.CTkButton(self.cadre_btn, text="Rechercher", command=self.rechercher_salle)
+        btn_search.grid(row=0, column=3, padx=5, pady=5)
+
+        btn_show = ctk.CTkButton(self.cadre_btn, text="Afficher", command=self.lister_salles)
+        btn_show.grid(row=0, column=4, padx=5, pady=5)
+
+        # Cadre liste
+        self.cadre_list = ctk.CTkFrame(self)
+        self.cadre_list.pack(pady=10, padx=10, fill="both", expand=True)
+
+        self.treeList = ttk.Treeview(
+            self.cadre_list,
+            columns=("code", "libelle", "type", "capacite"),
+            show="headings"
+        )
+
+        self.treeList.heading("code", text="CODE")
+        self.treeList.heading("libelle", text="LIBELLE")
+        self.treeList.heading("type", text="TYPE")
+        self.treeList.heading("capacite", text="CAPACITE")
+
+        self.treeList.column("code", width=100)
+        self.treeList.column("libelle", width=180)
+        self.treeList.column("type", width=150)
+        self.treeList.column("capacite", width=100)
+
+        self.treeList.pack(fill="both", expand=True, padx=10, pady=10)
+
+        self.lister_salles()
+
+    def vider_champs(self):
+        self.entry_code.delete(0, "end")
+        self.entry_libelle.delete(0, "end")
+        self.entry_type.delete(0, "end")
+        self.entry_capacite.delete(0, "end")
 
     def ajouter_salle(self):
         code = self.entry_code.get()
@@ -55,12 +92,8 @@ class ViewSalle(ctk.CTk):
 
         s = Salle(code, libelle, type_s, capacite)
         self.service.ajouter_salle(s)
-
-    def afficher_salles(self):
-        liste = self.service.recuperer_salles()
-        for s in liste:
-            s.afficher_infos()
-            print("------")
+        self.lister_salles()
+        self.vider_champs()
 
     def modifier_salle(self):
         code = self.entry_code.get()
@@ -75,10 +108,14 @@ class ViewSalle(ctk.CTk):
 
         s = Salle(code, libelle, type_s, capacite)
         self.service.modifier_salle(s)
+        self.lister_salles()
+        self.vider_champs()
 
     def supprimer_salle(self):
         code = self.entry_code.get()
         self.service.supprimer_salle(code)
+        self.lister_salles()
+        self.vider_champs()
 
     def rechercher_salle(self):
         code = self.entry_code.get()
@@ -95,3 +132,11 @@ class ViewSalle(ctk.CTk):
             self.entry_capacite.insert(0, str(s.capacite))
         else:
             print("Salle non trouvée")
+
+    def lister_salles(self):
+        for item in self.treeList.get_children():
+            self.treeList.delete(item)
+
+        liste = self.service.recuperer_salles()
+        for s in liste:
+            self.treeList.insert("", "end", values=(s.code, s.libelle, s.type, s.capacite))
