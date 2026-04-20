@@ -1,4 +1,5 @@
 import customtkinter as ctk
+ctk.set_appearance_mode("dark")
 from tkinter import ttk, messagebox
 from services.services_salle import ServiceSalle
 from models.salle import Salle
@@ -10,7 +11,7 @@ class ViewSalle(ctk.CTk):
         super().__init__()
 
         self.title("Gestion des salles")
-        self.geometry("700x500")
+        self.geometry("800x550")
 
         self.service = ServiceSalle()
 
