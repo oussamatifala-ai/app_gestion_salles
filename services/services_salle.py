@@ -1,13 +1,20 @@
 from Data.dao_salle import DataSalle
 
-class ServiceSalle:
 
+class ServiceSalle:
     def __init__(self):
         self.dao = DataSalle()
 
     def ajouter_salle(self, salle):
-        exist = self.dao.get_salle(salle.code)
+        if salle.code == "" or salle.libelle == "" or salle.type == "":
+            print("Erreur: champs vides")
+            return
 
+        if salle.capacite < 1:
+            print("Erreur: capacité invalide")
+            return
+
+        exist = self.dao.get_salle(salle.code)
         if exist is not None:
             print("Erreur: salle déjà existe")
             return
@@ -16,18 +23,40 @@ class ServiceSalle:
         print("Salle ajoutée avec succès")
 
     def modifier_salle(self, salle):
-        if salle.capacite <= 0:
+        if salle.code == "" or salle.libelle == "" or salle.type == "":
+            print("Erreur: champs vides")
+            return
+
+        if salle.capacite < 1:
             print("Erreur: capacité invalide")
             return
 
+        exist = self.dao.get_salle(salle.code)
+        if exist is None:
+            print("Erreur: salle non trouvée")
+            return
+
         self.dao.update_salle(salle)
-        print("Salle modifiée")
+        print("Salle modifiée avec succès")
 
     def supprimer_salle(self, code):
+        if code == "":
+            print("Erreur: code vide")
+            return
+
+        exist = self.dao.get_salle(code)
+        if exist is None:
+            print("Erreur: salle non trouvée")
+            return
+
         self.dao.delete_salle(code)
-        print("Salle supprimée")
+        print("Salle supprimée avec succès")
 
     def rechercher_salle(self, code):
+        if code == "":
+            print("Erreur: code vide")
+            return None
+
         return self.dao.get_salle(code)
 
     def recuperer_salles(self):
