@@ -1,6 +1,6 @@
 from Data.dao_salle import DataSalle
 
-
+# Couche service pour la gestion des salles
 class ServiceSalle:
     def __init__(self):
         self.dao = DataSalle()
