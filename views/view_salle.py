@@ -132,3 +132,8 @@ class ViewSalle(ctk.CTk):
         liste = self.service.recuperer_salles()
         for s in liste:
             self.treeList.insert("", "end", values=(s.code, s.libelle, s.type, s.capacite))
+
+    placeholder_text = "Code salle"
+    placeholder_text = "Nom de la salle"
+    placeholder_text = "Type de salle"
+    placeholder_text = "Capacité max"
