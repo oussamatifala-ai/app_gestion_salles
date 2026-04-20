@@ -14,7 +14,6 @@ class ViewSalle(ctk.CTk):
 
         self.service = ServiceSalle()
 
-        # Cadre informations
         self.cadre_info = ctk.CTkFrame(self)
         self.cadre_info.pack(pady=10, padx=10)
 
@@ -30,26 +29,15 @@ class ViewSalle(ctk.CTk):
         self.entry_capacite = ctk.CTkEntry(self.cadre_info, placeholder_text="Capacité", width=200)
         self.entry_capacite.grid(row=3, column=0, padx=10, pady=5)
 
-        # Cadre boutons
         self.cadre_btn = ctk.CTkFrame(self)
         self.cadre_btn.pack(pady=10, padx=10)
 
-        btn_add = ctk.CTkButton(self.cadre_btn, text="Ajouter", command=self.ajouter_salle)
-        btn_add.grid(row=0, column=0, padx=5, pady=5)
+        ctk.CTkButton(self.cadre_btn, text="Ajouter", command=self.ajouter_salle).grid(row=0, column=0, padx=5, pady=5)
+        ctk.CTkButton(self.cadre_btn, text="Modifier", command=self.modifier_salle).grid(row=0, column=1, padx=5, pady=5)
+        ctk.CTkButton(self.cadre_btn, text="Supprimer", command=self.supprimer_salle).grid(row=0, column=2, padx=5, pady=5)
+        ctk.CTkButton(self.cadre_btn, text="Rechercher", command=self.rechercher_salle).grid(row=0, column=3, padx=5, pady=5)
+        ctk.CTkButton(self.cadre_btn, text="Afficher", command=self.lister_salles).grid(row=0, column=4, padx=5, pady=5)
 
-        btn_update = ctk.CTkButton(self.cadre_btn, text="Modifier", command=self.modifier_salle)
-        btn_update.grid(row=0, column=1, padx=5, pady=5)
-
-        btn_delete = ctk.CTkButton(self.cadre_btn, text="Supprimer", command=self.supprimer_salle)
-        btn_delete.grid(row=0, column=2, padx=5, pady=5)
-
-        btn_search = ctk.CTkButton(self.cadre_btn, text="Rechercher", command=self.rechercher_salle)
-        btn_search.grid(row=0, column=3, padx=5, pady=5)
-
-        btn_show = ctk.CTkButton(self.cadre_btn, text="Afficher", command=self.lister_salles)
-        btn_show.grid(row=0, column=4, padx=5, pady=5)
-
-        # Cadre liste
         self.cadre_list = ctk.CTkFrame(self)
         self.cadre_list.pack(pady=10, padx=10, fill="both", expand=True)
 
