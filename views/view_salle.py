@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 from services.services_salle import ServiceSalle
 from models.salle import Salle
 
@@ -67,8 +67,6 @@ class ViewSalle(ctk.CTk):
         self.entry_type.delete(0, "end")
         self.entry_capacite.delete(0, "end")
 
-    from tkinter import messagebox
-
     def ajouter_salle(self):
         code = self.entry_code.get()
         libelle = self.entry_libelle.get()
@@ -82,7 +80,8 @@ class ViewSalle(ctk.CTk):
 
         s = Salle(code, libelle, type_s, capacite)
         self.service.ajouter_salle(s)
-
+        self.lister_salles()
+        self.vider_champs()
         messagebox.showinfo("Succès", "Salle ajoutée")
 
     def modifier_salle(self):
@@ -93,19 +92,21 @@ class ViewSalle(ctk.CTk):
         try:
             capacite = int(self.entry_capacite.get())
         except:
-            print("Capacité invalide")
+            messagebox.showerror("Erreur", "Capacité invalide")
             return
 
         s = Salle(code, libelle, type_s, capacite)
         self.service.modifier_salle(s)
         self.lister_salles()
         self.vider_champs()
+        messagebox.showinfo("Succès", "Salle modifiée")
 
     def supprimer_salle(self):
         code = self.entry_code.get()
         self.service.supprimer_salle(code)
         self.lister_salles()
         self.vider_champs()
+        messagebox.showinfo("Succès", "Salle supprimée")
 
     def rechercher_salle(self):
         code = self.entry_code.get()
@@ -121,7 +122,7 @@ class ViewSalle(ctk.CTk):
             self.entry_capacite.delete(0, "end")
             self.entry_capacite.insert(0, str(s.capacite))
         else:
-            print("Salle non trouvée")
+            messagebox.showerror("Erreur", "Salle non trouvée")
 
     def lister_salles(self):
         for item in self.treeList.get_children():
