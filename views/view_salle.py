@@ -106,7 +106,7 @@ class ViewSalle(ctk.CTk):
         self.service.supprimer_salle(code)
         self.lister_salles()
         self.vider_champs()
-        messagebox.showinfo("Succès", "Salle supprimée")
+        messagebox.showinfo("Succès", "Salle supprimée avec succès")
 
     def rechercher_salle(self):
         code = self.entry_code.get()
