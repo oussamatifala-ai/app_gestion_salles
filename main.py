@@ -27,3 +27,8 @@ for s in liste:
 # supprimer
 dao.delete_salle("S01")
 print("Salle supprimée")
+
+from views.view_salle import ViewSalle
+
+app = ViewSalle()
+app.mainloop()
