@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 from services.services_salle import ServiceSalle
 from models.salle import Salle
 
-
+# Interface graphique pour gestion des salles
 class ViewSalle(ctk.CTk):
 
     def __init__(self):
