@@ -6,8 +6,10 @@ class ServiceSalle:
         self.dao = DataSalle()
 
     def ajouter_salle(self, salle):
-        if salle.code == "" or salle.libelle == "" or salle.type == "" or salle.capacite <= 0:
-            print("Erreur: données invalides")
+        exist = self.dao.get_salle(salle.code)
+
+        if exist is not None:
+            print("Erreur: salle déjà existe")
             return
 
         self.dao.insert_salle(salle)
