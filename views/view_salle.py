@@ -137,3 +137,7 @@ class ViewSalle(ctk.CTk):
     placeholder_text = "Nom de la salle"
     placeholder_text = "Type de salle"
     placeholder_text = "Capacité max"
+
+if not code:
+    messagebox.showerror("Erreur", "Code vide")
+    return
