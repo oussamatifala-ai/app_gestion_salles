@@ -61,5 +61,3 @@ class ServiceSalle:
 
     def recuperer_salles(self):
         return self.dao.get_salles()
-
-if not salle.code.strip() or not salle.libelle.strip() or not salle.type.strip():
