@@ -31,6 +31,14 @@ class ViewSalle(ctk.CTk):
 
         btn_show = ctk.CTkButton(self, text="Afficher", command=self.afficher_salles)
         btn_show.pack(pady=5)
+        btn_update = ctk.CTkButton(self, text="Modifier", command=self.modifier_salle)
+        btn_update.pack(pady=5)
+
+        btn_delete = ctk.CTkButton(self, text="Supprimer", command=self.supprimer_salle)
+        btn_delete.pack(pady=5)
+
+        btn_search = ctk.CTkButton(self, text="Rechercher", command=self.rechercher_salle)
+        btn_search.pack(pady=5)
 
     def ajouter_salle(self):
         code = self.entry_code.get()
@@ -104,3 +112,37 @@ class ViewSalle(ctk.CTk):
         for s in liste:
             s.afficher_infos()
             print("------")
+
+    def modifier_salle(self):
+        code = self.entry_code.get()
+        libelle = self.entry_libelle.get()
+        type_s = self.entry_type.get()
+
+        try:
+            capacite = int(self.entry_capacite.get())
+        except:
+            print("Capacité invalide")
+            return
+
+        s = Salle(code, libelle, type_s, capacite)
+        self.service.modifier_salle(s)
+
+    def supprimer_salle(self):
+        code = self.entry_code.get()
+        self.service.supprimer_salle(code)
+
+    def rechercher_salle(self):
+        code = self.entry_code.get()
+        s = self.service.rechercher_salle(code)
+
+        if s is not None:
+            self.entry_libelle.delete(0, "end")
+            self.entry_libelle.insert(0, s.libelle)
+
+            self.entry_type.delete(0, "end")
+            self.entry_type.insert(0, s.type)
+
+            self.entry_capacite.delete(0, "end")
+            self.entry_capacite.insert(0, s.capacite)
+        else:
+            print("Salle non trouvée")
