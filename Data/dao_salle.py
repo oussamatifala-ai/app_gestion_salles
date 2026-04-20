@@ -20,14 +20,15 @@ class DataSalle:
         con = self.get_connection()
         cursor = con.cursor()
 
-        req = "INSERT INTO salle (code, libelle, type, capacite) VALUES (%s, %s, %s, %s)"
-        val = (salle.code, salle.libelle, salle.type, salle.capacite)
+        try:
+            req = "INSERT INTO salle (code, libelle, type, capacite) VALUES (%s, %s, %s, %s)"
+            val = (salle.code, salle.libelle, salle.type, salle.capacite)
 
-        cursor.execute(req, val)
-        con.commit()
-
-        cursor.close()
-        con.close()
+            cursor.execute(req, val)
+            con.commit()
+        finally:
+            cursor.close()
+            con.close()
 
     def update_salle(self, salle):
         con = self.get_connection()
