@@ -6,7 +6,7 @@ class Salle:
         self.capacite = capacite
 
     def afficher_infos(self):
-        print("Code :", self.code)
-        print("Libellé :", self.libelle)
-        print("Type :", self.type)
-        print("Capacité :", self.capacite)
+        print(f"Code : {self.code}")
+        print(f"Libellé : {self.libelle}")
+        print(f"Type : {self.type}")
+        print(f"Capacité : {self.capacite}")
